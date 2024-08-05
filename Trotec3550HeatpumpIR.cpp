@@ -86,8 +86,8 @@ void Trotec3550HeatpumpIR::sendTROTEC3550(IRSender& IR, uint8_t powerMode, uint8
 {
 //uint8_t swingH
   // ON, HEAT, AUTO FAN, +24 degrees
-  uint8_t TROTEC3550Template[] = { 0xC3, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x08, 0x00 };
-  //                           0     1     2     3     4     5     6     7     8     9    10    11    12
+  uint8_t TROTEC3550Template[] = { 0xC3, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 };
+  //                           0     1     2     3     4     5     6     7     8     9
 
   uint8_t checksum = 0x00;
 
