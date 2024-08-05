@@ -35,6 +35,7 @@
 #include <VaillantHeatpumpIR.h>
 #include <ZHJG01HeatpumpIR.h>
 #include <ZHLT01HeatpumpIR.h>
+#include <Trotec3550HeatpumpIR.h>
 
 class HeatpumpIRFactory
 {
