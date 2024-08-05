@@ -89,6 +89,8 @@ HeatpumpIR* HeatpumpIRFactory::create(const char *modelName) {
     return new ZHJG01HeatpumpIR();
   } else if (strcmp_P(modelName, PSTR("ZHLT01")) == 0) {
     return new ZHLT01HeatpumpIR();
+  } else if (strcmp_P(modelName, PSTR("Trotec3550")) == 0) {
+    return new Trotec3550HeatpumpIR();
   }
 
    return NULL;
