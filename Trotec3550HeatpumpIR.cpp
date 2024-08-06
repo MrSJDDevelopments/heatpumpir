@@ -28,12 +28,6 @@ void Trotec3550HeatpumpIR::send(IRSender& IR, uint8_t powerModeCmd, uint8_t oper
   {
     switch (operatingModeCmd)
     {
-//      case MODE_AUTO:
-//        operatingMode = TROTEC3550_AIRCON1_MODE_AUTO;
-//        break;
-//      case MODE_HEAT:
-//        operatingMode = TROTEC3550_AIRCON1_MODE_HEAT;
-//       break;
       case MODE_COOL:
         operatingMode = TROTEC3550_AIRCON1_MODE_COOL;
         break;
