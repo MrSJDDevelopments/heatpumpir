@@ -78,7 +78,6 @@ void Trotec3550HeatpumpIR::send(IRSender& IR, uint8_t powerModeCmd, uint8_t oper
 
 void Trotec3550HeatpumpIR::sendTROTEC3550(IRSender& IR, uint8_t powerMode, uint8_t operatingMode, uint8_t fanSpeed, uint8_t temperature, uint8_t swingV)
 {
-//uint8_t swingH
   // ON, COOL, SWING FAN, +16 degrees
   uint8_t TROTEC3550Template[] = { 0x55, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 };
   //                                 0     1     2     3     4     5     6     7     8
@@ -92,7 +91,7 @@ void Trotec3550HeatpumpIR::sendTROTEC3550(IRSender& IR, uint8_t powerMode, uint8
   TROTEC3550Template[6] |= operatingMode;
 
   // Set the temperature on the template message
-  TROTEC3550Template[1] |= (temperature - 8) << 3;
+  TROTEC3550Template[1] |= (temperature - 1) << 3;
 
   // Set the fan speed on the template message
   TROTEC3550Template[6] |= fanSpeed;
@@ -119,7 +118,7 @@ void Trotec3550HeatpumpIR::sendTROTEC3550(IRSender& IR, uint8_t powerMode, uint8
 
   // Data
   for (uint8_t i=0; i<sizeof(TROTEC3550Template); i++) {
-    IR.sendIRbyte(TROTEC3550Template[i], TROTEC3550_AIRCON1_BIT_MARK, TROTEC3550_AIRCON1_ZERO_SPACE, TROTEC3550_AIRCON1_ONE_SPACE);
+    IR.sendIRbyte(TROTEC3550Template[i], TROTEC3550_AIRCON1_BIT_MARK, TROTEC3550_AIRCON1_ZERO_SPACE, TROTEC3550_AIRCON1_ONE_SPACE, OTEC3550_AIRCON1_ZERO_SPACEACE);
   }
 
   // End mark
