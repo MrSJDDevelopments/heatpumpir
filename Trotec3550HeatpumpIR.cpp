@@ -3,7 +3,7 @@
 Trotec3550HeatpumpIR::Trotec3550HeatpumpIR() : HeatpumpIR()
 {
   static const char model[] PROGMEM = "TROTEC3550";
-  static const char info[]  PROGMEM = "{\"mdl\":\"TROTEC3550\",\"dn\":\"TROTEC3550\",\"mT\":16,\"xT\":30,\"fs\":5}";
+  static const char info[]  PROGMEM = "{\"mdl\":\"TROTEC3550\",\"dn\":\"TROTEC3550\",\"mT\":16,\"xT\":30,\"fs\":3}";
 
   _model = model;
   _info = info;
@@ -15,11 +15,10 @@ void Trotec3550HeatpumpIR::send(IRSender& IR, uint8_t powerModeCmd, uint8_t oper
   // Sensible defaults for the heat pump mode
 
   uint8_t powerMode = TROTEC3550_AIRCON1_MODE_ON;
-  uint8_t operatingMode = TROTEC3550_AIRCON1_MODE_DRY;
+  uint8_t operatingMode = TROTEC3550_AIRCON1_MODE_FAN;
   uint8_t fanSpeed = TROTEC3550_AIRCON1_FAN2;
   uint8_t temperature = 18;
-  uint8_t swingV = TROTEC3550_AIRCON1_VDIR_MANUAL;
-  // uint8_t swingH = TROTEC3550_AIRCON1_HDIR_MANUAL;
+  uint8_t swingV = TROTEC3550_AIRCON1_VDIR_SWING;
 
   if (powerModeCmd == POWER_OFF)
   {
@@ -49,9 +48,15 @@ void Trotec3550HeatpumpIR::send(IRSender& IR, uint8_t powerModeCmd, uint8_t oper
 
   switch (fanSpeedCmd)
   {
-//    case FAN_AUTO:
-//      fanSpeed = TROTEC3550_AIRCON1_FAN_AUTO;
-//      break;
+    case COOL_FAN_1:
+      fanSpeed = TROTEC3550_AIRCON1_COOL_FAN1;
+      break;
+    case COOL_FAN_2:
+      fanSpeed = TROTEC3550_AIRCON1_COOL_FAN2;
+      break;
+    case COOL_FAN_3:
+      fanSpeed = TROTEC3550_AIRCON1_COOL_FAN3;
+      break;
     case FAN_1:
       fanSpeed = TROTEC3550_AIRCON1_FAN1;
       break;
@@ -63,7 +68,7 @@ void Trotec3550HeatpumpIR::send(IRSender& IR, uint8_t powerModeCmd, uint8_t oper
       break;
   }
 
-  if ( temperatureCmd > 15 && temperatureCmd < 31)
+  if ( temperatureCmd > 16 && temperatureCmd < 30)
   {
     temperature = temperatureCmd;
   }
@@ -73,11 +78,6 @@ void Trotec3550HeatpumpIR::send(IRSender& IR, uint8_t powerModeCmd, uint8_t oper
     swingV = TROTEC3550_AIRCON1_VDIR_SWING;
   }
 
-//    if (swingHCmd == HDIR_SWING)
-//  {
-//    swingH = TROTEC3550_AIRCON1_HDIR_SWING;
-//  }
-//swingH
   sendTROTEC3550(IR, powerMode, operatingMode, fanSpeed, temperature, swingV);
 }
 
@@ -85,14 +85,14 @@ void Trotec3550HeatpumpIR::send(IRSender& IR, uint8_t powerModeCmd, uint8_t oper
 void Trotec3550HeatpumpIR::sendTROTEC3550(IRSender& IR, uint8_t powerMode, uint8_t operatingMode, uint8_t fanSpeed, uint8_t temperature, uint8_t swingV)
 {
 //uint8_t swingH
-  // ON, HEAT, AUTO FAN, +24 degrees
-  uint8_t TROTEC3550Template[] = { 0xC3, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 };
-  //                           0     1     2     3     4     5     6     7     8     9
+  // ON, COOL, SWING FAN, +16 degrees
+  uint8_t TROTEC3550Template[] = { 0x55, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 };
+  //                                 0     1     2     3     4     5     6     7     8
 
   uint8_t checksum = 0x00;
 
   // Set the power mode on the template message
-  TROTEC3550Template[9] |= powerMode;
+  TROTEC3550Template[1] |= powerMode;
 
   // Set the operatingmode on the template message
   TROTEC3550Template[6] |= operatingMode;
@@ -101,7 +101,7 @@ void Trotec3550HeatpumpIR::sendTROTEC3550(IRSender& IR, uint8_t powerMode, uint8
   TROTEC3550Template[1] |= (temperature - 8) << 3;
 
   // Set the fan speed on the template message
-  TROTEC3550Template[4] |= fanSpeed;
+  TROTEC3550Template[6] |= fanSpeed;
 
   // Set the vertical air direction on the template message
   TROTEC3550Template[1] |= swingV;
@@ -110,11 +110,11 @@ void Trotec3550HeatpumpIR::sendTROTEC3550(IRSender& IR, uint8_t powerMode, uint8
   //TROTEC3550Template[2] |= swingH;
 
   // Calculate the checksum
-  for (uint8_t i = 0; i < 12; i++) {
+  for (uint8_t i = 0; i < 1; i++) {
     checksum += TROTEC3550Template[i];
   }
 
-  TROTEC3550Template[12] = checksum;
+  TROTEC3550Template[8] = checksum;
 
   // 38 kHz PWM frequency
   IR.setFrequency(38);
