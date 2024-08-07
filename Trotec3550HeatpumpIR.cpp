@@ -1,4 +1,5 @@
 #include <Trotec3550HeatpumpIR.h>
+#include "esphome/core/log.h"
 
 Trotec3550HeatpumpIR::Trotec3550HeatpumpIR() : HeatpumpIR()
 {
