@@ -1,5 +1,5 @@
 /*
-    TROTEC3550 heatpump control (remote control ??????????)
+    TROTEC3550 heatpump control (remote control N/A)
 */
 #ifndef Trotec3550HeatpumpIR_h
 #define Trotec3550HeatpumpIR_h
@@ -17,22 +17,21 @@
 
 //################ IR Remote Codes #################
 //################################################## 
-#define TROTEC3550_AIRCON1_MODE_COOL   0x20
-#define TROTEC3550_AIRCON1_MODE_DRY    0x40  //    <------|-- AC Mode
-#define TROTEC3550_AIRCON1_MODE_FAN    0xC0
 #define TROTEC3550_AIRCON1_MODE_OFF    0x00  //    <------|-- AC Power
-#define TROTEC3550_AIRCON1_MODE_ON     0x20
-#define TROTEC3550_AIRCON1_FAN1        0x60
-#define TROTEC3550_AIRCON1_FAN2        0x40  //    <------|-- AC Fan Speed
-#define TROTEC3550_AIRCON1_FAN3        0x20
-#define TROTEC3550_AIRCON1_VDIR_STOP   0x00  //    <------|-- AC Air Direction
-#define TROTEC3550_AIRCON1_VDIR_SWING  0x07
+#define TROTEC3550_AIRCON1_MODE_ON     0x02
+#define TROTEC3550_AIRCON1_MODE_COOL   0x11
+#define TROTEC3550_AIRCON1_MODE_FAN    0x13  //    <------|-- AC Mode
+#define TROTEC3550_AIRCON1_MODE_DRY    0x12
+#define TROTEC3550_AIRCON1_FAN1        0x11
+#define TROTEC3550_AIRCON1_FAN2        0x21  //    <------|-- AC Fan Speed
+#define TROTEC3550_AIRCON1_FAN3        0x31
+#define TROTEC3550_AIRCON1_VDIR_SWING  0x03  //    <------|-- AC Air Direction
 
 
-class Trotec3550HeatpumpIR : public HeatpumpIR
+class TROTEC3550HeatpumpIR : public HeatpumpIR
 {
   public:
-    Trotec3550HeatpumpIR();
+    TROTEC3550HeatpumpIR();
     void send(IRSender& IR, uint8_t powerModeCmd, uint8_t operatingModeCmd, uint8_t fanSpeedCmd, uint8_t temperatureCmd, uint8_t swingVCmd);
 
   private:
