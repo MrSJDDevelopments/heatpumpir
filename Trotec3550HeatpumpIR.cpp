@@ -70,6 +70,12 @@ void TROTEC3550HeatpumpIR::send(IRSender& IR, uint8_t powerModeCmd, uint8_t oper
 
 void TROTEC3550HeatpumpIR::sendTROTEC3550(IRSender& IR, uint8_t powerMode, uint8_t operatingMode, uint8_t fanSpeed, uint8_t temperature, uint8_t swingV)
 {
+//########################### Code Info Sourced From ############################
+//###############################################################################
+// https://github.com/crankyoldgit/IRremoteESP8266
+// https://github.com/crankyoldgit/IRremoteESP8266/blob/master/src/ir_Trotec.h
+// https://github.com/crankyoldgit/IRremoteESP8266/blob/master/src/ir_Trotec.cpp
+
 //############### IR Code Template #################
 //################################################## 
   uint8_t TROTEC3550Template[] = { 0x55, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 };
