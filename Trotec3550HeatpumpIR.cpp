@@ -1,6 +1,6 @@
 #include <Trotec3550HeatpumpIR.h>
 
-TROTEC3550HeatpumpIR::TROTEC3550HeatpumpIR() : HeatpumpIR()
+Trotec3550HeatpumpIR::Trotec3550HeatpumpIR() : HeatpumpIR()
 {
   static const char model[] PROGMEM = "TROTEC3550";
   static const char info[]  PROGMEM = "{\"mdl\":\"TROTEC3550\",\"dn\":\"TROTEC3550\",\"mT\":16,\"xT\":30,\"fs\":5}";
@@ -10,7 +10,7 @@ TROTEC3550HeatpumpIR::TROTEC3550HeatpumpIR() : HeatpumpIR()
 }
 
 
-void TROTEC3550HeatpumpIR::send(IRSender& IR, uint8_t powerModeCmd, uint8_t operatingModeCmd, uint8_t fanSpeedCmd, uint8_t temperatureCmd, uint8_t swingVCmd)
+void Trotec3550HeatpumpIR::send(IRSender& IR, uint8_t powerModeCmd, uint8_t operatingModeCmd, uint8_t fanSpeedCmd, uint8_t temperatureCmd, uint8_t swingVCmd)
 {
 //############### DEFAULT SETTINGS #################
 //################################################## 
@@ -68,7 +68,7 @@ void TROTEC3550HeatpumpIR::send(IRSender& IR, uint8_t powerModeCmd, uint8_t oper
 }
 
 
-void TROTEC3550HeatpumpIR::sendTROTEC3550(IRSender& IR, uint8_t powerMode, uint8_t operatingMode, uint8_t fanSpeed, uint8_t temperature, uint8_t swingV)
+void Trotec3550HeatpumpIR::sendTROTEC3550(IRSender& IR, uint8_t powerMode, uint8_t operatingMode, uint8_t fanSpeed, uint8_t temperature, uint8_t swingV)
 {
 //########################### Code Info Sourced From ############################
 //###############################################################################

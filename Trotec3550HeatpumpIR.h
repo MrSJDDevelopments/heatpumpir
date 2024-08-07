@@ -28,10 +28,10 @@
 #define TROTEC3550_AIRCON1_VDIR_SWING  0x03  //    <------|-- AC Air Direction
 
 
-class TROTEC3550HeatpumpIR : public HeatpumpIR
+class Trotec3550HeatpumpIR : public HeatpumpIR
 {
   public:
-    TROTEC3550HeatpumpIR();
+    Trotec3550HeatpumpIR();
     void send(IRSender& IR, uint8_t powerModeCmd, uint8_t operatingModeCmd, uint8_t fanSpeedCmd, uint8_t temperatureCmd, uint8_t swingVCmd);
 
   private:
