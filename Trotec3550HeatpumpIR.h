@@ -1,5 +1,5 @@
 /*
-    TROTEC3550 heatpump control (remote control YKR-N/002E, YKR-P/002E)
+    TROTEC3550 heatpump control (remote control ??????????)
 */
 #ifndef Trotec3550HeatpumpIR_h
 #define Trotec3550HeatpumpIR_h
