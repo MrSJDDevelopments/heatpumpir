@@ -1,4 +1,5 @@
 #include <Trotec3550HeatpumpIR.h>
+#include <esphome.h>
 
 Trotec3550HeatpumpIR::Trotec3550HeatpumpIR() : HeatpumpIR()
 {
@@ -12,7 +13,7 @@ Trotec3550HeatpumpIR::Trotec3550HeatpumpIR() : HeatpumpIR()
 
 void Trotec3550HeatpumpIR::send(IRSender& IR, uint8_t powerModeCmd, uint8_t operatingModeCmd, uint8_t fanSpeedCmd, uint8_t temperatureCmd, uint8_t swingVCmd)
 { 
-
+ESP_LOGE("inside","send method called");
 //############### DEFAULT SETTINGS #################
 //################################################## 
 
@@ -70,7 +71,7 @@ void Trotec3550HeatpumpIR::send(IRSender& IR, uint8_t powerModeCmd, uint8_t oper
 
 void Trotec3550HeatpumpIR::sendTROTEC3550(IRSender& IR, uint8_t powerMode, uint8_t operatingMode, uint8_t fanSpeed, uint8_t temperature, uint8_t swingV)
 {
-
+ESP_LOGE("inside","sendTROTEC3550 called");
 //########################### Code Info Sourced From ############################
 //###############################################################################
 // https://github.com/crankyoldgit/IRremoteESP8266
