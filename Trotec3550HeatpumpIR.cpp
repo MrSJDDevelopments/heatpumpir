@@ -4,7 +4,7 @@ Trotec3550HeatpumpIR::Trotec3550HeatpumpIR() : HeatpumpIR()
 {
   static const char model[] PROGMEM = "TROTEC3550";
   static const char info[]  PROGMEM = "{\"mdl\":\"Trotec3550\",\"dn\":\"TROTEC3550\",\"mT\":16,\"xT\":30,\"fs\":5}";
-
+LOGLN("inside","send method called");
   _model = model;
   _info = info;
 }
