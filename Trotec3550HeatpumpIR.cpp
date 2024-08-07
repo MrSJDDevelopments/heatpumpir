@@ -1,5 +1,5 @@
 #include <Trotec3550HeatpumpIR.h>
-#include <map>
+#include <esp_err.h>
 
 Trotec3550HeatpumpIR::Trotec3550HeatpumpIR() : HeatpumpIR()
 {
