@@ -1,5 +1,4 @@
 #include <Trotec3550HeatpumpIR.h>
-#ifdef USE_ARDUINO
 #include "log.h"
 
 Trotec3550HeatpumpIR::Trotec3550HeatpumpIR() : HeatpumpIR()
