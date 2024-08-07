@@ -64,7 +64,7 @@ void Trotec3550HeatpumpIR::send(IRSender& IR, uint8_t powerModeCmd, uint8_t oper
     swingV = TROTEC3550_AIRCON1_VDIR_SWING;
   }
 
-  sendTROTEC_3550(IR, powerMode, operatingMode, fanSpeed, temperature, swingV);
+  sendTROTEC3550(IR, powerMode, operatingMode, fanSpeed, temperature, swingV);
 }
 
 
