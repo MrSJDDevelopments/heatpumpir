@@ -17,16 +17,15 @@
 
 //################ IR Remote Codes #################
 //################################################## 
-#define TROTEC3550_AIRCON1_MODE_COOL   0x20
-#define TROTEC3550_AIRCON1_MODE_DRY    0x40  //    <------|-- AC Mode
-#define TROTEC3550_AIRCON1_MODE_FAN    0xC0
 #define TROTEC3550_AIRCON1_MODE_OFF    0x00  //    <------|-- AC Power
-#define TROTEC3550_AIRCON1_MODE_ON     0x20
-#define TROTEC3550_AIRCON1_FAN1        0x60
-#define TROTEC3550_AIRCON1_FAN2        0x40  //    <------|-- AC Fan Speed
-#define TROTEC3550_AIRCON1_FAN3        0x20
-#define TROTEC3550_AIRCON1_VDIR_STOP   0x00  //    <------|-- AC Air Direction
-#define TROTEC3550_AIRCON1_VDIR_SWING  0x07
+#define TROTEC3550_AIRCON1_MODE_ON     0x02
+#define TROTEC3550_AIRCON1_MODE_COOL   0x11
+#define TROTEC3550_AIRCON1_MODE_FAN    0x13  //    <------|-- AC Mode
+#define TROTEC3550_AIRCON1_MODE_DRY    0x12
+#define TROTEC3550_AIRCON1_FAN1        0x11
+#define TROTEC3550_AIRCON1_FAN2        0x21  //    <------|-- AC Fan Speed
+#define TROTEC3550_AIRCON1_FAN3        0x31
+#define TROTEC3550_AIRCON1_VDIR_SWING  0x03  //    <------|-- AC Air Direction
 
 
 class TROTEC3550HeatpumpIR : public HeatpumpIR
