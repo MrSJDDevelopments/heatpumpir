@@ -12,7 +12,8 @@ TROTEC3550HeatpumpIR::TROTEC3550HeatpumpIR() : HeatpumpIR()
 
 void TROTEC3550HeatpumpIR::send(IRSender& IR, uint8_t powerModeCmd, uint8_t operatingModeCmd, uint8_t fanSpeedCmd, uint8_t temperatureCmd, uint8_t swingVCmd)
 {
-  // Sensible defaults for the heat pump mode
+//############### DEFAULT SETTINGS #################
+//################################################## 
 
   uint8_t powerMode = TROTEC3550_AIRCON1_MODE_ON;
   uint8_t operatingMode = TROTEC3550_AIRCON1_MODE_COOL;
@@ -69,47 +70,64 @@ void TROTEC3550HeatpumpIR::send(IRSender& IR, uint8_t powerModeCmd, uint8_t oper
 
 void TROTEC3550HeatpumpIR::sendTROTEC3550(IRSender& IR, uint8_t powerMode, uint8_t operatingMode, uint8_t fanSpeed, uint8_t temperature, uint8_t swingV)
 {
-  // ON, COOL, FAN2, +18 degrees
+//############### IR Code Template #################
+//################################################## 
   uint8_t TROTEC3550Template[] = { 0x55, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 };
   //                                 0     1     2     3     4     5     6     7     8
 
   uint8_t checksum = 0x00;
 
-  // Set the power mode on the template message
+//############## Power Mode Location ###############
+//################################################## 
   TROTEC3550Template[1] |= powerMode;
 
-  // Set the operatingmode on the template message
+//############ Operating Mode Location #############
+//################################################## 
   TROTEC3550Template[6] |= operatingMode;
 
-  // Set the temperature on the template message
+//########### Temperature in C Location ############
+//################################################## 
   TROTEC3550Template[1] |= (temperature - 8) << 3;
 
-  // Set the fan speed on the template message
+//############## Fan Speed Location ################
+//################################################## 
   TROTEC3550Template[6] |= fanSpeed;
 
-  // Set the vertical air direction on the template message
+//############### Airflow Location #################
+//################################################## 
   TROTEC3550Template[1] |= swingV;
 
-  // Calculate the checksum
+//############### Checksum Location ################
+//################################################## 
+  TROTEC3550Template[8] = checksum;
+
+//############# Checksum Calculation ###############
+//################################################## 
   for (uint8_t i = 0; i < 8; i++) {
     checksum += TROTEC3550Template[i];
   }
 
+//############### Carrier Frequency ################
+//################################################## 
   TROTEC3550Template[8] = checksum;
-
-  // 38 kHz PWM frequency
   IR.setFrequency(38);
 
-  // Header
+//################ Protocol Headder ################
+//################################################## 
+  TROTEC3550Template[8] = checksum;
   IR.mark(TROTEC3550_AIRCON1_HDR_MARK);
   IR.space(TROTEC3550_AIRCON1_HDR_SPACE);
 
-  // Data
+//################# Protocol Data ##################
+//################################################## 
+  TROTEC3550Template[8] = checksum;
   for (uint8_t i=0; i<sizeof(TROTEC3550Template); i++) {
     IR.sendIRbyte(TROTEC3550Template[i], TROTEC3550_AIRCON1_BIT_MARK, TROTEC3550_AIRCON1_ZERO_SPACE, TROTEC3550_AIRCON1_ONE_SPACE);
   }
-
-  // End mark
+  
+//############### Protocol End Mark ################
+//################################################## 
+  TROTEC3550Template[8] = checksum;
   IR.mark(TROTEC3550_AIRCON1_BIT_MARK);
   IR.space(0);
 }
