@@ -3,7 +3,7 @@
 TROTEC3550HeatpumpIR::TROTEC3550HeatpumpIR() : HeatpumpIR()
 {
   static const char model[] PROGMEM = "TROTEC3550";
-  static const char info[]  PROGMEM = "{\"mdl\":\"TROTEC3550\",\"dn\":\"TROTEC3550\",\"mT\":16,\"xT\":30,\"fs\":3}";
+  static const char info[]  PROGMEM = "{\"mdl\":\"TROTEC3550\",\"dn\":\"TROTEC3550\",\"mT\":16,\"xT\":30,\"fs\":5}";
 
   _model = model;
   _info = info;
@@ -73,40 +73,40 @@ void TROTEC3550HeatpumpIR::sendTROTEC3550(IRSender& IR, uint8_t powerMode, uint8
 //############### IR Code Template #################
 //################################################## 
   uint8_t TROTEC3550Template[] = { 0x55, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 };
-  //                                 0     1     2     3     4     5     6     7     8
+  //  Data Bytes                     0     1     2     3     4     5     6     7     8
 
-  uint8_t checksum = 0x00;
+  uint8_t checksum = 0x00;                                  
 
-//############## Power Mode Location ###############
-//################################################## 
-  TROTEC3550Template[1] |= powerMode;
-
-//############ Operating Mode Location #############
-//################################################## 
-  TROTEC3550Template[6] |= operatingMode;
-
-//########### Temperature in C Location ############
-//################################################## 
-  TROTEC3550Template[1] |= (temperature - 8) << 3;
-
-//############## Fan Speed Location ################
-//################################################## 
-  TROTEC3550Template[6] |= fanSpeed;
-
-//############### Airflow Location #################
-//################################################## 
-  TROTEC3550Template[1] |= swingV;
-
-//############### Checksum Location ################
-//################################################## 
-  TROTEC3550Template[8] = checksum;
-
-//############# Checksum Calculation ###############
-//################################################## 
-  for (uint8_t i = 0; i < 8; i++) {
-    checksum += TROTEC3550Template[i];
-  }
-
+//############## Power Mode Location ###############          ################# Code Structure #################        
+//##################################################          ################################################## 
+  TROTEC3550Template[1] |= powerMode;                         //  Byte 0
+                                                              //    uint8_t Intro     :8;  // fixed value (0x55)
+//############ Operating Mode Location #############          //  Byte 1
+//##################################################          //    uint8_t SwingV    :1;
+  TROTEC3550Template[6] |= operatingMode;                     //    uint8_t Power     :1;
+                                                              //    uint8_t           :1;  // Unknown
+//########### Temperature in C Location ############          //    uint8_t TimerSet  :1;
+//##################################################          //    uint8_t TempC     :4;  // Temp
+  TROTEC3550Template[1] |= (temperature - 8) << 3;            //  Byte 2
+                                                              //    uint8_t TimerHrs  :4;
+//############## Fan Speed Location ################          //    uint8_t           :4;  // Unknown
+//##################################################          //  Byte 3
+  TROTEC3550Template[6] |= fanSpeed;                          //    uint8_t TempF     :5;  // Temp
+                                                              //    uint8_t           :3;  // Unknown
+//############### Airflow Location #################          //  Byte 4
+//##################################################          //    uint8_t           :8;  // Unknown
+  TROTEC3550Template[1] |= swingV;                            //  Byte 5
+                                                              //    uint8_t           :8;  // Unknown
+//############# Checksum Calculation ###############          //  Byte 6
+//##################################################          //    uint8_t Mode      :2;
+   for (uint8_t i = 0; i < 8; i++) {                          //    uint8_t           :2;  // Unknown
+    checksum += TROTEC3550Template[i];                        //    uint8_t Fan       :2;
+  }                                                           //    uint8_t           :2;  // Unknown
+                                                              //  Byte 7
+//############### Checksum Location ################          //    uint8_t           :7;  // Unknown
+//##################################################          //    uint8_t Celsius   :1;  // DegC or DegF
+   TROTEC3550Template[8] = checksum;                          //  Byte 8
+                                                              //    uint8_t Sum       :8;  // Checksums
 //############### Carrier Frequency ################
 //################################################## 
   TROTEC3550Template[8] = checksum;
