@@ -12,6 +12,7 @@ Trotec3550HeatpumpIR::Trotec3550HeatpumpIR() : HeatpumpIR()
 
 void Trotec3550HeatpumpIR::send(IRSender& IR, uint8_t powerModeCmd, uint8_t operatingModeCmd, uint8_t fanSpeedCmd, uint8_t temperatureCmd, uint8_t swingVCmd)
 {
+ESP_LOGE("inside","send method called");
 //############### DEFAULT SETTINGS #################
 //################################################## 
 
