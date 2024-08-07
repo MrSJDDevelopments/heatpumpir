@@ -69,7 +69,6 @@ ESP_LOGE("inside","send method called");
   sendTROTEC3550(IR, powerMode, operatingMode, fanSpeed, temperature, swingV);
 }
 
-
 ESP_LOGE("inside","sendTROTEC3550 called");
 void Trotec3550HeatpumpIR::sendTROTEC3550(IRSender& IR, uint8_t powerMode, uint8_t operatingMode, uint8_t fanSpeed, uint8_t temperature, uint8_t swingV)
 {
