@@ -79,55 +79,51 @@ void TROTEC3550HeatpumpIR::sendTROTEC3550(IRSender& IR, uint8_t powerMode, uint8
 
 //############## Power Mode Location ###############          ################# Code Structure #################        
 //##################################################          ################################################## 
-  TROTEC3550Template[1] |= powerMode;                         //  Byte 0
+  TROTEC3550Template[1] |= powerMode;                         //  Byte 0  //
                                                               //    uint8_t Intro     :8;  // fixed value (0x55)
-//############ Operating Mode Location #############          //  Byte 1
+//############ Operating Mode Location #############          //  Byte 1  //
 //##################################################          //    uint8_t SwingV    :1;
   TROTEC3550Template[6] |= operatingMode;                     //    uint8_t Power     :1;
                                                               //    uint8_t           :1;  // Unknown
 //########### Temperature in C Location ############          //    uint8_t TimerSet  :1;
 //##################################################          //    uint8_t TempC     :4;  // Temp
-  TROTEC3550Template[1] |= (temperature - 8) << 3;            //  Byte 2
+  TROTEC3550Template[1] |= (temperature - 8) << 3;            //  Byte 2  //
                                                               //    uint8_t TimerHrs  :4;
 //############## Fan Speed Location ################          //    uint8_t           :4;  // Unknown
-//##################################################          //  Byte 3
+//##################################################          //  Byte 3  //
   TROTEC3550Template[6] |= fanSpeed;                          //    uint8_t TempF     :5;  // Temp
                                                               //    uint8_t           :3;  // Unknown
-//############### Airflow Location #################          //  Byte 4
+//############### Airflow Location #################          //  Byte 4  //
 //##################################################          //    uint8_t           :8;  // Unknown
-  TROTEC3550Template[1] |= swingV;                            //  Byte 5
+  TROTEC3550Template[1] |= swingV;                            //  Byte 5  //
                                                               //    uint8_t           :8;  // Unknown
-//############# Checksum Calculation ###############          //  Byte 6
+//############# Checksum Calculation ###############          //  Byte 6  //
 //##################################################          //    uint8_t Mode      :2;
-   for (uint8_t i = 0; i < 8; i++) {                          //    uint8_t           :2;  // Unknown
-    checksum += TROTEC3550Template[i];                        //    uint8_t Fan       :2;
-  }                                                           //    uint8_t           :2;  // Unknown
-                                                              //  Byte 7
-//############### Checksum Location ################          //    uint8_t           :7;  // Unknown
-//##################################################          //    uint8_t Celsius   :1;  // DegC or DegF
-   TROTEC3550Template[8] = checksum;                          //  Byte 8
+  TROTEC3550Template[8] = checksum;                           //    uint8_t           :2;  // Unknown
+                                                              //    uint8_t Fan       :2;
+//############### Checksum Location ################          //    uint8_t           :2;  // Unknown
+//##################################################          //  Byte 7  //
+   for (uint8_t i = 0; i < 8; i++) {                          //    uint8_t           :7;  // Unknown
+     checksum += TROTEC3550Template[i];                       //    uint8_t Celsius   :1;  // DegC or DegF                                 
+  }                                                           //  Byte 8  //
                                                               //    uint8_t Sum       :8;  // Checksums
 //############### Carrier Frequency ################
 //################################################## 
-  TROTEC3550Template[8] = checksum;
   IR.setFrequency(38);
 
 //################ Protocol Headder ################
 //################################################## 
-  TROTEC3550Template[8] = checksum;
   IR.mark(TROTEC3550_AIRCON1_HDR_MARK);
   IR.space(TROTEC3550_AIRCON1_HDR_SPACE);
 
 //################# Protocol Data ##################
 //################################################## 
-  TROTEC3550Template[8] = checksum;
   for (uint8_t i=0; i<sizeof(TROTEC3550Template); i++) {
     IR.sendIRbyte(TROTEC3550Template[i], TROTEC3550_AIRCON1_BIT_MARK, TROTEC3550_AIRCON1_ZERO_SPACE, TROTEC3550_AIRCON1_ONE_SPACE);
   }
   
 //############### Protocol End Mark ################
 //################################################## 
-  TROTEC3550Template[8] = checksum;
   IR.mark(TROTEC3550_AIRCON1_BIT_MARK);
   IR.space(0);
 }
