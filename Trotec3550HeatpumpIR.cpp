@@ -10,7 +10,7 @@ Trotec3550HeatpumpIR::Trotec3550HeatpumpIR() : HeatpumpIR()
 }
 
 
-void TROTEC3550HeatpumpIR::send(IRSender& IR, uint8_t powerModeCmd, uint8_t operatingModeCmd, uint8_t fanSpeedCmd, uint8_t temperatureCmd, uint8_t swingVCmd)
+void Trotec3550HeatpumpIR::send(IRSender& IR, uint8_t powerModeCmd, uint8_t operatingModeCmd, uint8_t fanSpeedCmd, uint8_t temperatureCmd, uint8_t swingVCmd)
 {
 //############### DEFAULT SETTINGS #################
 //################################################## 
@@ -64,11 +64,11 @@ void TROTEC3550HeatpumpIR::send(IRSender& IR, uint8_t powerModeCmd, uint8_t oper
     swingV = TROTEC3550_AIRCON1_VDIR_SWING;
   }
 
-  sendTROTEC3550(IR, powerMode, operatingMode, fanSpeed, temperature, swingV);
+  sendTROTEC_3550(IR, powerMode, operatingMode, fanSpeed, temperature, swingV);
 }
 
 
-void TROTEC3550HeatpumpIR::sendTROTEC3550(IRSender& IR, uint8_t powerMode, uint8_t operatingMode, uint8_t fanSpeed, uint8_t temperature, uint8_t swingV)
+void Trotec3550HeatpumpIR::sendTROTEC_3550(IRSender& IR, uint8_t powerMode, uint8_t operatingMode, uint8_t fanSpeed, uint8_t temperature, uint8_t swingV)
 {
 //############### IR Code Template #################
 //################################################## 
