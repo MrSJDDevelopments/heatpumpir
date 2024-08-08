@@ -13,7 +13,7 @@ Trotec3550HeatpumpIR::Trotec3550HeatpumpIR() : HeatpumpIR()
 
 void Trotec3550HeatpumpIR::send(IRSender& IR, uint8_t powerModeCmd, uint8_t operatingModeCmd, uint8_t fanSpeedCmd, uint8_t temperatureCmd, uint8_t swingVCmd)
 { 
-LOGLN("Line 16 DEBUG Message");
+Serial.println("Line 16 DEBUG Message");
 //############### DEFAULT SETTINGS #################
 //################################################## 
 
@@ -71,7 +71,7 @@ LOGLN("Line 16 DEBUG Message");
 
 void Trotec3550HeatpumpIR::sendTROTEC3550(IRSender& IR, uint8_t powerMode, uint8_t operatingMode, uint8_t fanSpeed, uint8_t temperature, uint8_t swingV)
 {
-LOGLN("Line 74 DEBUG Message");
+Serial.println("Line 74 DEBUG Message");
 //########################### Code Info Sourced From ############################
 //###############################################################################
 // https://github.com/crankyoldgit/IRremoteESP8266
