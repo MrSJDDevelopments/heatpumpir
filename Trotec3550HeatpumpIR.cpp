@@ -1,13 +1,6 @@
+#define DEBUG 1
 #include <Trotec3550HeatpumpIR.h>
-#define DEBUG
 
-#if defined(DEBUG) && (DEBUG > 0)
-#define LOG(...) Serial.print(__VA_ARGS__)
-#define LOGLN(...) Serial.println(__VA_ARGS__)
-#else
-#define LOG(...)
-#define LOGLN(...)
-#endif
 Trotec3550HeatpumpIR::Trotec3550HeatpumpIR() : HeatpumpIR()
 {
   static const char model[] PROGMEM = "TROTEC3550";
@@ -20,7 +13,7 @@ Trotec3550HeatpumpIR::Trotec3550HeatpumpIR() : HeatpumpIR()
 
 void Trotec3550HeatpumpIR::send(IRSender& IR, uint8_t powerModeCmd, uint8_t operatingModeCmd, uint8_t fanSpeedCmd, uint8_t temperatureCmd, uint8_t swingVCmd)
 { 
-  LOGLN("");
+LOGLN("Line 16 DEBUG Message");
 //############### DEFAULT SETTINGS #################
 //################################################## 
 
@@ -78,7 +71,7 @@ void Trotec3550HeatpumpIR::send(IRSender& IR, uint8_t powerModeCmd, uint8_t oper
 
 void Trotec3550HeatpumpIR::sendTROTEC3550(IRSender& IR, uint8_t powerMode, uint8_t operatingMode, uint8_t fanSpeed, uint8_t temperature, uint8_t swingV)
 {
-
+LOGLN("Line 74 DEBUG Message");
 //########################### Code Info Sourced From ############################
 //###############################################################################
 // https://github.com/crankyoldgit/IRremoteESP8266
@@ -136,7 +129,7 @@ void Trotec3550HeatpumpIR::sendTROTEC3550(IRSender& IR, uint8_t powerMode, uint8
   for (uint8_t i=0; i<sizeof(TROTEC3550Template); i++) {
     IR.sendIRbyte(TROTEC3550Template[i], TROTEC3550_AIRCON1_BIT_MARK, TROTEC3550_AIRCON1_ZERO_SPACE, TROTEC3550_AIRCON1_ONE_SPACE);
   }
-    LOGLN("");
+
 //############### Protocol End Mark ################
 //################################################## 
   IR.mark(TROTEC3550_AIRCON1_BIT_MARK);
