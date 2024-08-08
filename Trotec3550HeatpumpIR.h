@@ -34,7 +34,7 @@
 class Trotec3550HeatpumpIR : public HeatpumpIR
 {
   public:
-    Trotec3550eatpumpIR();
+    Trotec3550HeatpumpIR();
     void send(IRSender& IR, uint8_t powerModeCmd, uint8_t operatingModeCmd, uint8_t fanSpeedCmd, uint8_t temperatureCmd, uint8_t swingVCmd, uint8_t swingHCmd);
 
   private:
