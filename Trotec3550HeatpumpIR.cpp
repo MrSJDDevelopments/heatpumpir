@@ -1,4 +1,7 @@
-#define DEBUG
+//##########\##### DEBUG SETTINGS ######\###########
+//################################################## 
+#define DEBUG 1  // Set to 1 to enable, 0 to disable
+
 #if defined(DEBUG) && (DEBUG > 0)
 #define LOG(...) Serial.print(__VA_ARGS__)
 #define LOGLN(...) Serial.println(__VA_ARGS__)
