@@ -1,5 +1,13 @@
 #include <Trotec3550HeatpumpIR.h>
+#define DEBUG
 
+#if defined(DEBUG) && (DEBUG > 0)
+#define LOG(...) Serial.print(__VA_ARGS__)
+#define LOGLN(...) Serial.println(__VA_ARGS__)
+#else
+#define LOG(...)
+#define LOGLN(...)
+#endif
 Trotec3550HeatpumpIR::Trotec3550HeatpumpIR() : HeatpumpIR()
 {
   static const char model[] PROGMEM = "TROTEC3550";
