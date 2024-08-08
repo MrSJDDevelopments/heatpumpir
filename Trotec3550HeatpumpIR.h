@@ -1,41 +1,45 @@
 /*
-    TROTEC3550 heatpump control (remote control N/A)
+    AUX heatpump control (remote control YKR-N/002E, YKR-P/002E)
 */
-#ifndef Trotec3550HeatpumpIR_h
-#define Trotec3550HeatpumpIR_h
+#ifndef AUXHeatpumpIR_h
+#define AUXHeatpumpIR_h
 
 #include <HeatpumpIR.h>
 
 
-//################ Code IR Timeings ################
-//################################################## 
-#define TROTEC3550_AIRCON1_HDR_MARK    12000  // 12062  <-|
-#define TROTEC3550_AIRCON1_HDR_SPACE   5130   // 5130   <-|
-#define TROTEC3550_AIRCON1_BIT_MARK    550    // 544    <-|-- Arduino decoder printouts
-#define TROTEC3550_AIRCON1_ONE_SPACE   1950   // 1950   <-|
-#define TROTEC3550_AIRCON1_ZERO_SPACE  500    // 500    <-|
+// AUX timing constants
+#define AUX_AIRCON1_HDR_MARK    8800 // 9260 <-- Arduino decoder printouts
+#define AUX_AIRCON1_HDR_SPACE   4580 // 4540
+#define AUX_AIRCON1_BIT_MARK    490  // 540
+#define AUX_AIRCON1_ONE_SPACE   1740 // 1640
+#define AUX_AIRCON1_ZERO_SPACE  620  // 480
 
-//################ IR Remote Codes #################
-//################################################## 
-#define TROTEC3550_AIRCON1_MODE_OFF    0x00  //    <------|-- AC Power
-#define TROTEC3550_AIRCON1_MODE_ON     0x02
-#define TROTEC3550_AIRCON1_MODE_COOL   0x11
-#define TROTEC3550_AIRCON1_MODE_FAN    0x13  //    <------|-- AC Mode
-#define TROTEC3550_AIRCON1_MODE_DRY    0x12
-#define TROTEC3550_AIRCON1_FAN1        0x11
-#define TROTEC3550_AIRCON1_FAN2        0x21  //    <------|-- AC Fan Speed
-#define TROTEC3550_AIRCON1_FAN3        0x31
-#define TROTEC3550_AIRCON1_VDIR_SWING  0x03  //    <------|-- AC Air Direction
+// AUX codes
+#define AUX_AIRCON1_MODE_AUTO   0x00 // Operating mode
+#define AUX_AIRCON1_MODE_HEAT   0x80
+#define AUX_AIRCON1_MODE_COOL   0x20
+#define AUX_AIRCON1_MODE_DRY    0x40
+#define AUX_AIRCON1_MODE_FAN    0xC0
+#define AUX_AIRCON1_MODE_OFF    0x00 // Power
+#define AUX_AIRCON1_MODE_ON     0x20
+#define AUX_AIRCON1_FAN_AUTO    0xA0 // Fan speed
+#define AUX_AIRCON1_FAN1        0x60
+#define AUX_AIRCON1_FAN2        0x40
+#define AUX_AIRCON1_FAN3        0x20
+#define AUX_AIRCON1_VDIR_MANUAL 0x00 // Air direction modes
+#define AUX_AIRCON1_VDIR_SWING  0x07
+#define AUX_AIRCON1_HDIR_MANUAL 0x00
+#define AUX_AIRCON1_HDIR_SWING  0xE0
 
 
-class Trotec3550HeatpumpIR : public HeatpumpIR
+class AUXHeatpumpIR : public HeatpumpIR
 {
   public:
-    Trotec3550HeatpumpIR();
-    void send(IRSender& IR, uint8_t powerModeCmd, uint8_t operatingModeCmd, uint8_t fanSpeedCmd, uint8_t temperatureCmd, uint8_t swingVCmd);
+    AUXHeatpumpIR();
+    void send(IRSender& IR, uint8_t powerModeCmd, uint8_t operatingModeCmd, uint8_t fanSpeedCmd, uint8_t temperatureCmd, uint8_t swingVCmd, uint8_t swingHCmd);
 
   private:
-    void sendTROTEC3550(IRSender& IR, uint8_t powerMode, uint8_t operatingMode, uint8_t fanSpeed, uint8_t temperature, uint8_t swingV);
+    void sendAUX(IRSender& IR, uint8_t powerMode, uint8_t operatingMode, uint8_t fanSpeed, uint8_t temperature, uint8_t swingV, uint8_t swingH);
 };
 
 #endif

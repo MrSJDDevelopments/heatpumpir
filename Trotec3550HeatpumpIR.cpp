@@ -10,138 +10,138 @@
 #define LOGLN(...)
 #endif
 
-#include <Trotec3550HeatpumpIR.h>
+#include <AUXHeatpumpIR.h>
 
-Trotec3550HeatpumpIR::Trotec3550HeatpumpIR() : HeatpumpIR()
+AUXHeatpumpIR::AUXHeatpumpIR() : HeatpumpIR()
 {
-  static const char model[] PROGMEM = "TROTEC3550";
-  static const char info[]  PROGMEM = "{\"mdl\":\"Trotec3550\",\"dn\":\"TROTEC3550\",\"mT\":16,\"xT\":30,\"fs\":3}";
+  static const char model[] PROGMEM = "AUX";
+  static const char info[]  PROGMEM = "{\"mdl\":\"aux\",\"dn\":\"AUX\",\"mT\":16,\"xT\":30,\"fs\":5}";
 
   _model = model;
   _info = info;
 }
 
-void Trotec3550HeatpumpIR::send(IRSender& IR, uint8_t powerModeCmd, uint8_t operatingModeCmd, uint8_t fanSpeedCmd, uint8_t temperatureCmd, uint8_t swingVCmd)
-{ 
-LOGLN("Hello from line 26");
-//############### DEFAULT SETTINGS #################
-//################################################## 
 
-  uint8_t powerMode = TROTEC3550_AIRCON1_MODE_ON;
-  uint8_t operatingMode = TROTEC3550_AIRCON1_MODE_COOL;
-  uint8_t fanSpeed = TROTEC3550_AIRCON1_FAN2;
-  uint8_t temperature = 18;
-  uint8_t swingV = TROTEC3550_AIRCON1_VDIR_SWING;
+void AUXHeatpumpIR::send(IRSender& IR, uint8_t powerModeCmd, uint8_t operatingModeCmd, uint8_t fanSpeedCmd, uint8_t temperatureCmd, uint8_t swingVCmd, uint8_t swingHCmd)
+{
+LOGLN("AUXHeatpumpIR.cpp" "DEBUG DEBUG DEBUG DEBUG DEBUG DEBUG DEBUG DEBUG DEBUG DEBUG DEBUG DEBUG DEBUG DEBUG DEBUG DEBUG - Line 101 AUXHeatpumpIR.cpp");
+
+  // Sensible defaults for the heat pump mode
+
+  uint8_t powerMode = AUX_AIRCON1_MODE_ON;
+  uint8_t operatingMode = AUX_AIRCON1_MODE_AUTO;
+  uint8_t fanSpeed = AUX_AIRCON1_FAN_AUTO;
+  uint8_t temperature = 23;
+  uint8_t swingV = AUX_AIRCON1_VDIR_MANUAL;
+  uint8_t swingH = AUX_AIRCON1_HDIR_MANUAL;
 
   if (powerModeCmd == POWER_OFF)
   {
-    powerMode = TROTEC3550_AIRCON1_MODE_OFF;
+    powerMode = AUX_AIRCON1_MODE_OFF;
   }
   else
   {
     switch (operatingModeCmd)
     {
+      case MODE_AUTO:
+        operatingMode = AUX_AIRCON1_MODE_AUTO;
+        break;
+      case MODE_HEAT:
+        operatingMode = AUX_AIRCON1_MODE_HEAT;
+        break;
       case MODE_COOL:
-        operatingMode = TROTEC3550_AIRCON1_MODE_COOL;
+        operatingMode = AUX_AIRCON1_MODE_COOL;
         break;
       case MODE_DRY:
-        operatingMode = TROTEC3550_AIRCON1_MODE_DRY;
+        operatingMode = AUX_AIRCON1_MODE_DRY;
         break;
       case MODE_FAN:
-        operatingMode = TROTEC3550_AIRCON1_MODE_FAN;
+        operatingMode = AUX_AIRCON1_MODE_FAN;
        break;
     }
   }
 
   switch (fanSpeedCmd)
   {
+    case FAN_AUTO:
+      fanSpeed = AUX_AIRCON1_FAN_AUTO;
+      break;
     case FAN_1:
-      fanSpeed = TROTEC3550_AIRCON1_FAN1;
+      fanSpeed = AUX_AIRCON1_FAN1;
       break;
     case FAN_2:
-      fanSpeed = TROTEC3550_AIRCON1_FAN2;
+      fanSpeed = AUX_AIRCON1_FAN2;
       break;
     case FAN_3:
-      fanSpeed = TROTEC3550_AIRCON1_FAN3;
+      fanSpeed = AUX_AIRCON1_FAN3;
       break;
   }
 
-  if ( temperatureCmd > 16 && temperatureCmd < 30)
+  if ( temperatureCmd > 15 && temperatureCmd < 31)
   {
     temperature = temperatureCmd;
   }
 
   if (swingVCmd == VDIR_SWING)
   {
-    swingV = TROTEC3550_AIRCON1_VDIR_SWING;
+    swingV = AUX_AIRCON1_VDIR_SWING;
   }
 
-  sendTROTEC3550(IR, powerMode, operatingMode, fanSpeed, temperature, swingV);
+    if (swingHCmd == HDIR_SWING)
+  {
+    swingH = AUX_AIRCON1_HDIR_SWING;
+  }
+
+  sendAUX(IR, powerMode, operatingMode, fanSpeed, temperature, swingV, swingH);
 }
 
-void Trotec3550HeatpumpIR::sendTROTEC3550(IRSender& IR, uint8_t powerMode, uint8_t operatingMode, uint8_t fanSpeed, uint8_t temperature, uint8_t swingV)
+
+void AUXHeatpumpIR::sendAUX(IRSender& IR, uint8_t powerMode, uint8_t operatingMode, uint8_t fanSpeed, uint8_t temperature, uint8_t swingV, uint8_t swingH)
 {
-LOGLN("Hello from line 84");
-//########################### Code Info Sourced From ############################
-//###############################################################################
-// https://github.com/crankyoldgit/IRremoteESP8266
-// https://github.com/crankyoldgit/IRremoteESP8266/blob/master/src/ir_Trotec.h
-// https://github.com/crankyoldgit/IRremoteESP8266/blob/master/src/ir_Trotec.cpp
+LOGLN("AUXHeatpumpIR.cpp" "DEBUG DEBUG DEBUG DEBUG DEBUG DEBUG DEBUG DEBUG DEBUG DEBUG DEBUG DEBUG DEBUG DEBUG DEBUG DEBUG - Line 27 AUXHeatpumpIR.cpp");  // ON, HEAT, AUTO FAN, +24 degrees
+  uint8_t AUXTemplate[] = { 0xC3, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x08, 0x00 };
+  //                           0     1     2     3     4     5     6     7     8     9    10    11    12
 
-//############### IR Code Template #################
-//################################################## 
-  uint8_t TROTEC3550Template[] = { 0x55, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 };
-  //  Data Bytes                     0     1     2     3     4     5     6     7     8
+  uint8_t checksum = 0x00;
 
-  uint8_t checksum = 0x00;                                  
+  // Set the power mode on the template message
+  AUXTemplate[9] |= powerMode;
 
-//############## Power Mode Location ###############          ################# Code Structure #################        
-//##################################################          ################################################## 
-  TROTEC3550Template[1] |= powerMode;                         //  Byte 0  //
-                                                              //    uint8_t Intro     :8;  <-|-- fixed @ (0x55)
-//############ Operating Mode Location #############          //  Byte 1  //
-//##################################################          //    uint8_t SwingV    :1;
-  TROTEC3550Template[6] |= operatingMode;                     //    uint8_t Power     :1;
-                                                              //    uint8_t           :1;  <-|-- Unknown
-//########### Temperature in C Location ############          //    uint8_t TimerSet  :1;
-//##################################################          //    uint8_t TempC     :4;  <-|-- Temp
-  TROTEC3550Template[1] |= (temperature - 8) << 3;            //  Byte 2  //
-                                                              //    uint8_t TimerHrs  :4;
-//############## Fan Speed Location ################          //    uint8_t           :4;  <-|-- Unknown
-//##################################################          //  Byte 3  //
-  TROTEC3550Template[6] |= fanSpeed;                          //    uint8_t TempF     :5;  <-|-- Temp
-                                                              //    uint8_t           :3;  <-|-- Unknown
-//############### Airflow Location #################          //  Byte 4  //
-//##################################################          //    uint8_t           :8;  <-|-- Unknown
-  TROTEC3550Template[1] |= swingV;                            //  Byte 5  //
-                                                              //    uint8_t           :8;  <-|-- Unknown
-//############# Checksum Calculation ###############          //  Byte 6  //
-//##################################################          //    uint8_t Mode      :2;
-  TROTEC3550Template[8] = checksum;                           //    uint8_t           :2;  <-|-- Unknown
-                                                              //    uint8_t Fan       :2;
-//############### Checksum Location ################          //    uint8_t           :2;  <-|-- Unknown
-//##################################################          //  Byte 7  //
-   for (uint8_t i = 0; i < 8; i++) {                          //    uint8_t           :7;  <-|-- Unknown
-     checksum += TROTEC3550Template[i];                       //    uint8_t Celsius   :1;  <-|-- DegC or DegF                                 
-  }                                                           //  Byte 8  //
-                                                              //    uint8_t Sum       :8;  <-|-- Checksums
-//############### Carrier Frequency ################
-//################################################## 
-  IR.setFrequency(38);
+  // Set the operatingmode on the template message
+  AUXTemplate[6] |= operatingMode;
 
-//################ Protocol Headder ################
-//################################################## 
-  IR.mark(TROTEC3550_AIRCON1_HDR_MARK);
-  IR.space(TROTEC3550_AIRCON1_HDR_SPACE);
+  // Set the temperature on the template message
+  AUXTemplate[1] |= (temperature - 8) << 3;
 
-//################# Protocol Data ##################
-//################################################## 
-  for (uint8_t i=0; i<sizeof(TROTEC3550Template); i++) {
-    IR.sendIRbyte(TROTEC3550Template[i], TROTEC3550_AIRCON1_BIT_MARK, TROTEC3550_AIRCON1_ZERO_SPACE, TROTEC3550_AIRCON1_ONE_SPACE);
+  // Set the fan speed on the template message
+  AUXTemplate[4] |= fanSpeed;
+
+  // Set the vertical air direction on the template message
+  AUXTemplate[1] |= swingV;
+
+  // Set the horizontal air direction on the template message
+  AUXTemplate[2] |= swingH;
+
+  // Calculate the checksum
+  for (uint8_t i = 0; i < 12; i++) {
+    checksum += AUXTemplate[i];
   }
 
-//############### Protocol End Mark ################
-//################################################## 
-  IR.mark(TROTEC3550_AIRCON1_BIT_MARK);
+  AUXTemplate[12] = checksum;
+
+  // 38 kHz PWM frequency
+  IR.setFrequency(38);
+
+  // Header
+  IR.mark(AUX_AIRCON1_HDR_MARK);
+  IR.space(AUX_AIRCON1_HDR_SPACE);
+
+  // Data
+  for (uint8_t i=0; i<sizeof(AUXTemplate); i++) {
+    IR.sendIRbyte(AUXTemplate[i], AUX_AIRCON1_BIT_MARK, AUX_AIRCON1_ZERO_SPACE, AUX_AIRCON1_ONE_SPACE);
+  }
+
+  // End mark
+  IR.mark(AUX_AIRCON1_BIT_MARK);
   IR.space(0);
 }
