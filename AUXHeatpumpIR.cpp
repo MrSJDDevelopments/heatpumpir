@@ -24,7 +24,7 @@ AUXHeatpumpIR::AUXHeatpumpIR() : HeatpumpIR()
 
 void AUXHeatpumpIR::send(IRSender& IR, uint8_t powerModeCmd, uint8_t operatingModeCmd, uint8_t fanSpeedCmd, uint8_t temperatureCmd, uint8_t swingVCmd, uint8_t swingHCmd)
 {
-LOGLN("inside" "Hello from line 27");
+LOGLN("AUXHeatpumpIR.cpp" "DEBUG DEBUG DEBUG DEBUG DEBUG DEBUG DEBUG DEBUG DEBUG DEBUG DEBUG DEBUG DEBUG DEBUG DEBUG DEBUG - Line 101 AUXHeatpumpIR.cpp");
 
   // Sensible defaults for the heat pump mode
 
@@ -98,8 +98,7 @@ LOGLN("inside" "Hello from line 27");
 
 void AUXHeatpumpIR::sendAUX(IRSender& IR, uint8_t powerMode, uint8_t operatingMode, uint8_t fanSpeed, uint8_t temperature, uint8_t swingV, uint8_t swingH)
 {
-LOGLN("inside" "Hello from line 101");
-  // ON, HEAT, AUTO FAN, +24 degrees
+LOGLN("AUXHeatpumpIR.cpp" "DEBUG DEBUG DEBUG DEBUG DEBUG DEBUG DEBUG DEBUG DEBUG DEBUG DEBUG DEBUG DEBUG DEBUG DEBUG DEBUG - Line 27 AUXHeatpumpIR.cpp");  // ON, HEAT, AUTO FAN, +24 degrees
   uint8_t AUXTemplate[] = { 0xC3, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x08, 0x00 };
   //                           0     1     2     3     4     5     6     7     8     9    10    11    12
 
