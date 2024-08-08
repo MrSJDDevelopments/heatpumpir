@@ -1,4 +1,4 @@
-#define DEBUG
+#define DEBUG 1
 #if defined(DEBUG) && (DEBUG > 0)
 #define LOG(...) Serial.print(__VA_ARGS__)
 #define LOGLN(...) Serial.println(__VA_ARGS__)
