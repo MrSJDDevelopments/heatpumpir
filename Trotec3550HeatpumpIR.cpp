@@ -1,4 +1,4 @@
-#define DEBUG 1
+#define DEBUG
 #if defined(DEBUG) && (DEBUG > 0)
 #define LOG(...) Serial.print(__VA_ARGS__)
 #define LOGLN(...) Serial.println(__VA_ARGS__)
@@ -13,7 +13,7 @@ Trotec3550HeatpumpIR::Trotec3550HeatpumpIR() : HeatpumpIR()
 {
   static const char model[] PROGMEM = "TROTEC3550";
   static const char info[]  PROGMEM = "{\"mdl\":\"Trotec3550\",\"dn\":\"TROTEC3550\",\"mT\":16,\"xT\":30,\"fs\":3}";
-  LOGLN("");
+  LOGLN("Hello from line 16");
   _model = model;
   _info = info;
 }
@@ -21,7 +21,7 @@ Trotec3550HeatpumpIR::Trotec3550HeatpumpIR() : HeatpumpIR()
 
 void Trotec3550HeatpumpIR::send(IRSender& IR, uint8_t powerModeCmd, uint8_t operatingModeCmd, uint8_t fanSpeedCmd, uint8_t temperatureCmd, uint8_t swingVCmd)
 { 
-  LOGLN("");
+  LOGLN("Hello from line 24");
 //############### DEFAULT SETTINGS #################
 //################################################## 
 
@@ -79,7 +79,7 @@ void Trotec3550HeatpumpIR::send(IRSender& IR, uint8_t powerModeCmd, uint8_t oper
 
 void Trotec3550HeatpumpIR::sendTROTEC3550(IRSender& IR, uint8_t powerMode, uint8_t operatingMode, uint8_t fanSpeed, uint8_t temperature, uint8_t swingV)
 {
- LOGLN("");
+ LOGLN("Hello from line 82");
 //########################### Code Info Sourced From ############################
 //###############################################################################
 // https://github.com/crankyoldgit/IRremoteESP8266
