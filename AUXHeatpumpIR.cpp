@@ -1,3 +1,15 @@
+//################ DEBUG SETTINGS ##################
+//################################################## 
+#define DEBUG 1  // Set to 1 to enable, 0 to disable
+
+#if defined(DEBUG) && (DEBUG > 0)
+#define LOG(...) Serial.print(__VA_ARGS__)
+#define LOGLN(...) Serial.println(__VA_ARGS__)
+#else
+#define LOG(...)
+#define LOGLN(...)
+#endif
+
 #include <AUXHeatpumpIR.h>
 
 AUXHeatpumpIR::AUXHeatpumpIR() : HeatpumpIR()
@@ -12,6 +24,8 @@ AUXHeatpumpIR::AUXHeatpumpIR() : HeatpumpIR()
 
 void AUXHeatpumpIR::send(IRSender& IR, uint8_t powerModeCmd, uint8_t operatingModeCmd, uint8_t fanSpeedCmd, uint8_t temperatureCmd, uint8_t swingVCmd, uint8_t swingHCmd)
 {
+LOGLN("inside" "Hello from line 27");
+
   // Sensible defaults for the heat pump mode
 
   uint8_t powerMode = AUX_AIRCON1_MODE_ON;
@@ -84,6 +98,7 @@ void AUXHeatpumpIR::send(IRSender& IR, uint8_t powerModeCmd, uint8_t operatingMo
 
 void AUXHeatpumpIR::sendAUX(IRSender& IR, uint8_t powerMode, uint8_t operatingMode, uint8_t fanSpeed, uint8_t temperature, uint8_t swingV, uint8_t swingH)
 {
+LOGLN("inside" "Hello from line 101");
   // ON, HEAT, AUTO FAN, +24 degrees
   uint8_t AUXTemplate[] = { 0xC3, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x08, 0x00 };
   //                           0     1     2     3     4     5     6     7     8     9    10    11    12
